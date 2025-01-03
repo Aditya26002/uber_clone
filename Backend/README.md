@@ -34,59 +34,66 @@ The request body should be in JSON format and include the following fields:
 
 ### Description
 
-Authenticate a user and return a JWT token.
+Authenticates a user using their email and password, returning a JWT token upon successful login.
 
 ### HTTP Method
 
 `POST`
+
+### Endpoint
+
+`/users/login`
 
 ### Request Body
 
 The request body should be in JSON format and include the following fields:
 
 - `email` (string, required): User's email address (must be a valid email).
-- `password` (string, required): User's password (minimum 8 characters).
+- `password` (string, required): User's password (minimum 6 characters).
 
 ### Example Response
 
-- `200 OK`
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).
+  - `email` (string): User's email address (must be a valid email).
+  - `password` (string): User's password (minimum 6 characters).
+- `token` (String): JWT Token
 
-  ```json
-  {
-    "token": "jwt_token",
-    "user": {
-      "_id": "user_id",
-      "fullname": {
-        "firstname": "John",
-        "lastname": "Doe"
-      },
-      "email": "user@example.com"
-    }
-  }
-  ```
+## `/users/profile` Endpoint
 
-- `400 Bad Request`
+### Description
 
-  ```json
-  {
-    "errors": [
-      {
-        "msg": "Invalid email",
-        "param": "email",
-        "location": "body"
-      },
-      {
-        "msg": "Password must be at least 8 characters long",
-        "param": "password",
-        "location": "body"
-      }
-    ]
-  }
-  ```
+Retrieves the profile information of the currently authenticated user.
 
-- `401 Unauthorized`
-  ```json
-  {
-    "message": "Invalid email or password"
-  }
-  ```
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header:
+`Authorization: Bearer <token>`
+
+### Example Response
+
+- `user` (object):
+  - `fullname` (object).
+    - `firstname` (string): User's first name (minimum 3 characters).
+    - `lastname` (string): User's last name (minimum 3 characters).
+  - `email` (string): User's email address (must be a valid email).
+
+## `/users/logout` Endpoint
+
+### Description
+
+Logout the current user and blacklist the token provided in cookie or headers
+
+### HTTP Method
+
+`GET`
+
+### Authentication
+
+Requires a valid JWT token in the Authorization header or cookie
