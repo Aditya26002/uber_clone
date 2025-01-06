@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const captainSchema = new mongoose.Schema({
   fullname: {
     firstname: {
       type: String,
       required: true,
-      minlength: [3, "First name must be at least 3 characters long"],
+      minlength: [3, "Firstname must be at least 3 characters long"],
     },
     lastname: {
       type: String,
-      required: False,
-      minlength: [3, "Last name must be at least 3 characters long"],
+      minlength: [3, "Lastname must be at least 3 characters long"],
     },
   },
   email: {
@@ -20,22 +19,24 @@ const captainSchema = new mongoose.Schema({
     required: true,
     unique: true,
     lowercase: true,
-    minlength: [5, "Email must be at least 5 characters long"],
+    match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
   },
   password: {
     type: String,
     required: true,
-    minlength: [8, "Password must be at least 8 characters long"],
+    select: false,
   },
   socketId: {
     type: String,
   },
+
   status: {
     type: String,
     enum: ["active", "inactive"],
     default: "inactive",
   },
-  vehichle: {
+
+  vehicle: {
     color: {
       type: String,
       required: true,
@@ -51,18 +52,19 @@ const captainSchema = new mongoose.Schema({
       required: true,
       min: [1, "Capacity must be at least 1"],
     },
-    vehichleType: {
+    vehicleType: {
       type: String,
       required: true,
       enum: ["car", "motorcycle", "auto"],
     },
-    location: {
-      lat: {
-        type: Number,
-      },
-      lng: {
-        type: Number,
-      },
+  },
+
+  location: {
+    ltd: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
     },
   },
 });
