@@ -1,28 +1,46 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { CaptainDataContext } from "../context/CaptainContext";
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [captainData, setCaptainData] = useState({});
 
-  const submitHandler = (e) => {
+  const { captain, setCaptain } = useContext(CaptainDataContext);
+  const navigate = useNavigate();
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setCaptainData({ email: email, password: password });
+    const captainData = { email: email, password: password };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/captains/login`,
+      captainData
+    );
+
+    if (response.status === 200) {
+      const data = response.data;
+      localStorage.setItem("token", data.token);
+      setCaptain(data.captain);
+
+      navigate("/captain-home");
+    }
+
     setEmail("");
     setPassword("");
-    console.log(captainData);
   };
 
   return (
     <div className="p-7 flex flex-col justify-between h-screen">
       <div>
-        <img
-          src="https://freelogopng.com/images/all_img/1659761425uber-driver-logo-png.png"
-          alt=""
-          className="w-12 mb-10"
-        />
-        <h2 className="text-2xl font-bold mb-5">Captain Login</h2>
+        <div className="flex items-center gap-6">
+          <img
+            src="https://freelogopng.com/images/all_img/1659761425uber-driver-logo-png.png"
+            alt=""
+            className="w-12 mb-5"
+          />
+          <h2 className="text-2xl font-bold mb-5">Captain Login</h2>
+        </div>
         <form action="" onSubmit={(e) => submitHandler(e)}>
           <h3 className="text-lg font-semibold mb-2">What's your email?</h3>
           <input
