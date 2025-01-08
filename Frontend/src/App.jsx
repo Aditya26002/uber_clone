@@ -6,8 +6,11 @@ import UserSignup from "./pages/UserSignup";
 import CaptainLogin from "./pages/CaptainLogin";
 import CaptainSignup from "./pages/CaptainSignup";
 import GetStarted from "./pages/GetStarted";
-import UserProtectedWrapper from "./pages/UserProtectedWrapper";
 import UserLogout from "./pages/USerLogout";
+import CaptainHome from "./pages/CaptainHome";
+import UserProtectedWrapper from "./wrappers/UserProtectedWrapper";
+import CaptainProtectedWrapper from "./wrappers/CaptainProtectedWrapper";
+import CaptainLogout from "./pages/CaptainLogout";
 
 const App = () => {
   return (
@@ -32,6 +35,22 @@ const App = () => {
             <UserProtectedWrapper>
               <UserLogout />
             </UserProtectedWrapper>
+          }
+        />
+        <Route
+          path="/captain-home"
+          element={
+            <CaptainProtectedWrapper>
+              <CaptainHome />
+            </CaptainProtectedWrapper>
+          }
+        />
+        <Route
+          path="/captain/logout"
+          element={
+            <CaptainProtectedWrapper>
+              <CaptainLogout />
+            </CaptainProtectedWrapper>
           }
         />
       </Routes>
