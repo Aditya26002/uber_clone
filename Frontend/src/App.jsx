@@ -1,28 +1,30 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import UserLogin from "./pages/UserLogin";
-import UserSignup from "./pages/UserSignup";
-import CaptainLogin from "./pages/CaptainLogin";
-import CaptainSignup from "./pages/CaptainSignup";
 import GetStarted from "./pages/GetStarted";
-import UserLogout from "./pages/USerLogout";
-import CaptainHome from "./pages/CaptainHome";
+
+import Home from "./pages/User/Home";
+import UserLogin from "./pages/User/UserLogin";
+import UserSignup from "./pages/User/UserSignup";
+import Riding from "./pages/User/Riding";
+import UserLogout from "./pages/User/UserLogout";
 import UserProtectedWrapper from "./wrappers/UserProtectedWrapper";
+
+import CaptainHome from "./pages/Captain/CaptainHome";
+import CaptainLogout from "./pages/Captain/CaptainLogout";
+import CaptainLogin from "./pages/Captain/CaptainLogin";
+import CaptainSignup from "./pages/Captain/CaptainSignup";
+import CaptainRiding from "./pages/Captain/CaptainRiding";
 import CaptainProtectedWrapper from "./wrappers/CaptainProtectedWrapper";
-import CaptainLogout from "./pages/CaptainLogout";
-import Riding from "./pages/Riding";
 
 const App = () => {
   return (
     <div className="">
       <Routes>
         <Route path="/" element={<GetStarted />} />
+        {/* USER ROUTES */}
         <Route path="/login" element={<UserLogin />} />
         <Route path="/riding" element={<Riding />} />
         <Route path="/signup" element={<UserSignup />} />
-        <Route path="/captain-login" element={<CaptainLogin />} />
-        <Route path="/captain-signup" element={<CaptainSignup />} />
         <Route
           path="/home"
           element={
@@ -39,6 +41,11 @@ const App = () => {
             </UserProtectedWrapper>
           }
         />
+
+        {/* CAPTAIN ROUTES */}
+        <Route path="/captain-login" element={<CaptainLogin />} />
+        <Route path="/captain-signup" element={<CaptainSignup />} />
+        <Route path="/captain-riding" element={<CaptainRiding />} />
         <Route
           path="/captain-home"
           element={
