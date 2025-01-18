@@ -17,6 +17,7 @@ const VehiclePanel = (props) => {
       {/* UberGo */}
       <div
         onClick={() => {
+          props.selectVehicle("car");
           props.setConfirmRidePanelOpen(true);
           props.setVehiclePanelOpen(false);
         }}
@@ -46,11 +47,12 @@ const VehiclePanel = (props) => {
             <h4 className="text-gray-600 text-sm">Affordable, compact rides</h4>
           </div>
         </div>
-        <h4 className="font-semibold">₹193.20</h4>
+        <h4 className="font-semibold">₹{props.fare.car}</h4>
       </div>
       {/* Moto */}
       <div
         onClick={() => {
+          props.selectVehicle("moto");
           props.setConfirmRidePanelOpen(true);
           props.setVehiclePanelOpen(false);
         }}
@@ -82,11 +84,12 @@ const VehiclePanel = (props) => {
             </h4>
           </div>
         </div>
-        <h4 className="font-semibold">₹65.28</h4>
+        <h4 className="font-semibold">₹{props.fare.moto}</h4>
       </div>
       {/* UberAuto */}
       <div
         onClick={() => {
+          props.selectVehicle("auto");
           props.setConfirmRidePanelOpen(true);
           props.setVehiclePanelOpen(false);
         }}
@@ -115,7 +118,7 @@ const VehiclePanel = (props) => {
             </div>
           </div>
         </div>
-        <h4 className="font-semibold">₹113.20</h4>
+        <h4 className="font-semibold">₹{props.fare.auto}</h4>
       </div>
     </div>
   );
