@@ -59,7 +59,7 @@ const UserSignup = () => {
             />
             <input
               required
-              value={firstName}
+              value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               type="text"
               className="bg-[#eeeeee] mb-5 px-4 py-2 border rounded w-1/2 placeholder:text-sm"

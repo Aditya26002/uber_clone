@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
@@ -8,6 +8,8 @@ import ConfirmRide from "../../components/User/ConfirmRide";
 import LookingForDriver from "../../components/User/LookingForDriver";
 import WaitingForDriver from "../../components/User/WaitingForDriver";
 import axios from "axios";
+import { SocketContext } from "../../context/SocketContext";
+import { UserDataContext } from "../../context/userContext";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -31,6 +33,13 @@ const Home = () => {
   const confirmRidePanelRef = useRef(null);
   const lookingForDriverPanelRef = useRef(null);
   const waitingForDriverPanelRef = useRef(null);
+
+  const { socket } = useContext(SocketContext);
+  const { user } = useContext(UserDataContext);
+
+  useEffect(() => {
+    socket.emit("join", { userType: "user", userId: user._id });
+  }, [user]);
 
   const submitHandler = (e) => {
     e.preventDefault();
