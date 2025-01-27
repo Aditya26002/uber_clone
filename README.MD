@@ -1,85 +1,156 @@
 # Uber Clone
 
-## Description
+## Overview
 
-A comprehensive Uber clone application that replicates the core functionalities of the original Uber platform, including user authentication, ride booking, real-time tracking, and payment processing.
+A full-stack Uber clone application that implements core ride-sharing functionalities including user authentication, real-time ride booking, location tracking, and driver-passenger matching.
 
-## Features
+## Key Features
 
-- **User Authentication:** Secure login and registration for riders and drivers.
-- **Ride Booking:** Users can book rides specifying pickup and drop-off locations.
-- **Real-Time Tracking:** Live tracking of drivers and rides on an interactive map.
-- **Payment Integration:** Secure payment processing with multiple payment options.
-- **Notifications:** Real-time notifications for ride status updates.
-- **Admin Dashboard:** Manage users, rides, and payments through an administrative interface.
+### User & Driver Authentication:
 
-## Technologies Used
+- Secure JWT-based authentication
+- Separate flows for passengers and drivers
+- Session management
 
-- **Frontend:** React Native, Redux
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **Real-Time Communication:** Socket.io
-- **Authentication:** JWT (JSON Web Tokens)
-- **Payment Gateway:** Stripe API
-- **Map Integration:** Google Maps API
+### Real-time Location Tracking
 
-## Installation
+- Live GPS tracking using Google Maps API
+- Real-time driver location updates
+- Interactive map interface
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/yourusername/uber_clone.git
-   ```
-2. **Navigate to the project directory:**
-   ```bash
-   cd uber_clone
-   ```
-3. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-4. **Set up environment variables:**
-   - Create a `.env` file in the root directory.
-   - Add the following variables:
-     ```
-     PORT=5000
-     MONGODB_URI=your_mongodb_connection_string
-     JWT_SECRET=your_jwt_secret
-     GOOGLE_MAPS_API_KEY=your_google_maps_api_key
-     ```
-5. **Run the application:**
-   ```bash
-   npm run dev
-   ```
+### Ride Management
 
-## Usage
+- Ride booking and fare calculation
+- Driver-passenger matching
+- Ride status updates
+- OTP verification for ride start
 
-- **Riders:** Sign up or log in to book rides, track drivers in real-time, and make payments.
-- **Drivers:** Register, manage availability, accept ride requests, and track earnings.
-- **Admin:** Access the admin dashboard to oversee platform operations.
+### Real-time Communication
+
+- WebSocket integration for live updates
+- Real-time notifications
+- Status synchronization between driver and passenger
+
+## Tech Stack
+
+### Frontend
+
+- React.js with Vite
+- TailwindCSS for styling
+- Google Maps API integration
+- Socket.io client
+- GSAP for animations
+
+### Backend
+
+- Node.js + Express.js
+- MongoDB with Mongoose
+- Socket.io for real-time communication
+- JWT authentication
+- RESTful API architecture
+
+## Project Structure
+
+```bash
+├── Backend/                # Backend server code
+│   ├── controllers/       # Request handlers
+│   ├── models/           # Database models
+│   ├── routes/           # API routes
+│   ├── services/         # Business logic
+│   └── middlewares/      # Custom middlewares
+│
+├── Frontend/             # Frontend React app
+│   ├── src/
+│   │   ├── components/   # Reusable components
+│   │   ├── pages/       # Page components
+│   │   ├── context/     # Context providers
+│   │   └── wrappers/    # HOC wrappers
+│   └── public/          # Static assets
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- MongoDB
+- Google Maps API key
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/uber-clone.git
+cd uber-clone
+```
+
+2. Install Backend Dependencies
+
+```bash
+cd Backend
+npm install
+```
+
+3. Install Frontend Dependencies
+
+```bash
+cd Frontend
+npm install
+```
+
+4. Environment Setup
+
+- Create .env files in both Backend and Frontend directories
+- Configure required environment variables:
+
+```bash
+# Backend/.env
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+PORT=4000
+
+# Frontend/.env
+VITE_BASE_URL=http://localhost:4000
+VITE_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+```
+
+5. Run the Application
+
+```bash
+# Start Backend Server
+cd Backend
+npx nodemon
+
+# Start Frontend Development Server
+cd Frontend
+npm run dev
+```
+
+## API Documentation
+
+For detailed API documentation, refer to the README.md file in the backend folder.
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature/YourFeature
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add YourFeature"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature/YourFeature
-   ```
-5. Open a pull request.
+1. Fork the repository
+2. Create a new branch (git checkout -b feature/AmazingFeature)
+3. Commit your changes (git commit -m 'Add some AmazingFeature')
+4. Push to the branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## Acknowledgments
+
+- React Documentation
+- Express.js Documentation
+- Socket.io Documentation
+- Google Maps Platform
 
 ## Contact
 
-For any inquiries or support, please contact [adityadaksh002@gmail.com](mailto:adityadaksh002@gmail.com).
+- Aditya Daksh - adityadaksh002@gmail.com
+- Project Link: https://github.com/Aditya26002/uber_clone
