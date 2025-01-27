@@ -1,5 +1,5 @@
 const axios = require("axios");
-const captainModel = require("../model/captain.model");
+const captainModel = require("../models/captain.model");
 
 module.exports.getAddressCoordinate = async (address) => {
   const apiKey = process.env.GOOGLE_MAPS_API;
@@ -11,14 +11,16 @@ module.exports.getAddressCoordinate = async (address) => {
     const response = await axios.get(url);
     if (response.data.status === "OK") {
       const location = response.data.results[0].geometry.location;
-      return { ltd: location.lat, lng: location.lng };
+      return {
+        ltd: location.lat,
+        lng: location.lng,
+      };
     } else {
-      console.error("Error status:", response.data.status);
       throw new Error("Unable to fetch coordinates");
     }
   } catch (error) {
-    console.error("Error fetching coordinates:", error.message);
-    throw new Error("Error fetching coordinates");
+    console.error(error);
+    throw error;
   }
 };
 
@@ -52,7 +54,7 @@ module.exports.getDistanceTime = async (origin, destination) => {
 
 module.exports.getAutoCompleteSuggestions = async (input) => {
   if (!input) {
-    throw new Error("Input is required");
+    throw new Error("query is required");
   }
 
   const apiKey = process.env.GOOGLE_MAPS_API;
@@ -63,24 +65,23 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
   try {
     const response = await axios.get(url);
     if (response.data.status === "OK") {
-      return response.data.predictions.map(
-        (prediction) => prediction.description
-      );
+      return response.data.predictions
+        .map((prediction) => prediction.description)
+        .filter((value) => value);
     } else {
-      console.error("Error status:", response.data.status);
       throw new Error("Unable to fetch suggestions");
     }
-  } catch (error) {
-    console.error("Error fetching suggestions:", error.message);
-    throw new Error("Error fetching suggestions");
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
-module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
+module.exports.getCaptainsInTheRadius = async (ltd, lng) => {
   const captains = await captainModel.find({
     location: {
       $geoWithin: {
-        $centerSphere: [[ltd, lng], radius / 6371],
+        $centerSphere: [[ltd, lng], 6371],
       },
     },
   });
