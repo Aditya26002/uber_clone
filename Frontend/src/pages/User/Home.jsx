@@ -10,6 +10,7 @@ import WaitingForDriver from "../../components/User/WaitingForDriver";
 import axios from "axios";
 import { SocketContext } from "../../context/SocketContext";
 import { UserDataContext } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [pickup, setPickup] = useState("");
@@ -26,6 +27,7 @@ const Home = () => {
   const [activeField, setActiveField] = useState(null);
   const [fare, setFare] = useState({});
   const [vehicleType, setVehicleType] = useState(null);
+  const [ride, setRide] = useState(null);
 
   const panelRef = useRef(null);
   const panelCloseRef = useRef(null);
@@ -37,9 +39,22 @@ const Home = () => {
   const { socket } = useContext(SocketContext);
   const { user } = useContext(UserDataContext);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     socket.emit("join", { userType: "user", userId: user._id });
   }, [user]);
+
+  socket.on("ride-confirmed", (ride) => {
+    setLookingForDriverPanelOpen(false);
+    setWaitingForDriverPanelOpen(true);
+    setRide(ride);
+  });
+
+  socket.on("ride-started", (ride) => {
+    setWaitingForDriverPanelOpen(false);
+    navigate("/riding", { state: { ride } });
+  });
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,7 +111,6 @@ const Home = () => {
         },
       }
     );
-    console.log(response.data);
     setFare(response.data);
   }
 
@@ -114,8 +128,6 @@ const Home = () => {
         },
       }
     );
-
-    console.log(response.data);
   }
 
   useGSAP(() => {
@@ -343,6 +355,7 @@ const Home = () => {
         <WaitingForDriver
           setWaitingForDriverPanelOpen={setWaitingForDriverPanelOpen}
           setLookingForDriverPanelOpen={setLookingForDriverPanelOpen}
+          ride={ride}
         />
       </div>
     </div>
